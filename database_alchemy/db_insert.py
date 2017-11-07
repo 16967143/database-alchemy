@@ -80,9 +80,9 @@ def create_result(csv_path, sample_obj):
 @click.argument('results_csv', type=click.Path(exists=True, dir_okay=False))
 @click.argument('db_name')
 @click.option('-a', '--ip-address', default='127.0.0.1', show_default=True,
-              help='the ip address of the postgresql server to bind to.')
+              help='the ip address of the PostgreSQL server to bind to.')
 @click.option('-p', '--port', default='5432', show_default=True,
-              help='the port of the postgresql server to bind to.')
+              help='the port of the PostgreSQL server to bind to.')
 def main(metadata_json, results_csv, db_name, ip_address, port):
     '''Insert new project data into an existing database by supplying a results
     csv file and an accompanying metadata json file describing the analysis.
@@ -115,7 +115,7 @@ def main(metadata_json, results_csv, db_name, ip_address, port):
       }
 
     The RESULTS_CSV file must contain a column corresponding to the sample names
-    in the JSON file, followed by a column for each metric. The format is the
+    in the json file, followed by a column for each metric. The format is the
     following:
 
     \b

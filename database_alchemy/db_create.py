@@ -1,4 +1,5 @@
 import click
+from collections import OrderedDict
 from sqlalchemy import Column, ForeignKey, create_engine
 from sqlalchemy import Integer, String, Date, func
 from sqlalchemy.dialects.postgresql import JSONB
@@ -19,6 +20,13 @@ class Analysis(Base):
     analyst = Column(String, nullable=False)
     samples = relationship("Sample", back_populates="analysis")
 
+
+    def display(self):
+        return OrderedDict([('analysis_id', self.analysis_id),
+                            ('analysis_name', self.analysis_name),
+                            ('date', self.date),
+                            ('department', self.department),
+                            ('analyst', self.analyst)])
 
     def __repr__(self):
         return f"Analysis(analysis_id: {self.analysis_id}, analysis_name: '{self.analysis_name}', " \
@@ -61,9 +69,9 @@ class Result(Base):
 @click.command()
 @click.argument('db_name')
 @click.option('-a', '--ip-address', default='127.0.0.1', show_default=True,
-              help='the ip address of the postgresql server to bind to.')
+              help='the ip address of the PostgreSQL server to bind to.')
 @click.option('-p', '--port', default='5432', show_default=True,
-              help='the port of the postgresql server to bind to.')
+              help='the port of the PostgreSQL server to bind to.')
 def main(db_name, ip_address, port):
     '''Set up a project database for tracking analyses, samples, and results.
 
